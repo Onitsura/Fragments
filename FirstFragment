@@ -1,0 +1,40 @@
+package com.example.fragments;
+
+import android.os.Bundle;
+import android.view.View;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Button;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+public class FirstFragment extends Fragment {
+    public FirstFragment(){
+        super(R.layout.first_fragment);
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+        Button changeFragment = (Button) view.findViewById(R.id.button);
+        EditText text = (EditText) view.findViewById(R.id.editTextTextPersonName);
+        changeFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            Fragment second = new SecondFragment();
+            Bundle bundle = new Bundle();
+            String valueOfEditText = text.getText().toString();
+            bundle.putString("Key", valueOfEditText);
+            second.setArguments(bundle);
+                FragmentManager fragmentManager = getParentFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.fragment_container_view, second).commit();
+            }
+        });
+    }
+}
